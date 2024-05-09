@@ -8,23 +8,23 @@
 #include <unistd.h>
 #include "disk.h"
 
-int fd; 
+int fd;
 int diskReadCount = 0;
 int diskWriteCount = 0;
 
 void DevResetDiskAccessCount(void)
 {
-	diskReadCount = diskWriteCount = 0;
+    diskReadCount = diskWriteCount = 0;
 }
 
 int DevGetDiskReadCount(void)
 {
-	return diskReadCount;
+    return diskReadCount;
 }
 
 int DevGetDiskWriteCount(void)
 {
-	return diskWriteCount;
+    return diskWriteCount;
 }
 
 void DevCreateDisk(void)
@@ -34,12 +34,12 @@ void DevCreateDisk(void)
 
 void DevOpenDisk(void)
 {
-	fd = open("MY_DISK", O_RDWR);
+    fd = open("MY_DISK", O_RDWR);
 }
 
- void DevCloseDisk(void) {
-          close(fd);
- }
+void DevCloseDisk(void) {
+    close(fd);
+}
 
 void __DevMoveBlock(int blkno){
     lseek(fd, (off_t)+(BLOCK_SIZE*blkno),SEEK_SET);
@@ -47,15 +47,14 @@ void __DevMoveBlock(int blkno){
 
 void DevReadBlock(int blkno, char* pBuf)
 {
-   __DevMoveBlock(blkno);
-   read(fd, pBuf, BLOCK_SIZE);
-   diskReadCount++;
+    __DevMoveBlock(blkno);
+    read(fd, pBuf, BLOCK_SIZE);
+    diskReadCount++;
 }
 
 void DevWriteBlock(int blkno, char* pBuf)
 {
-   __DevMoveBlock(blkno);
-   write(fd, pBuf, BLOCK_SIZE);
-   diskWriteCount++;
+    __DevMoveBlock(blkno);
+    write(fd, pBuf, BLOCK_SIZE);
+    diskWriteCount++;
 }
-

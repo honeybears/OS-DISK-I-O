@@ -40,10 +40,10 @@ struct Buf
     CIRCLEQ_ENTRY(Buf) llist;
 };
 
-CIRCLEQ_HEAD(bufList, Buf) bufList[MAX_BUFLIST_NUM];
-CIRCLEQ_HEAD(stateList, Buf) stateList[MAX_BUF_STATE_NUM];
-CIRCLEQ_HEAD(freeList, Buf) freeListHead;
-CIRCLEQ_HEAD(lruList, Buf) lruListHead;
+extern CIRCLEQ_HEAD(bufList, Buf) bufList[MAX_BUFLIST_NUM];
+extern CIRCLEQ_HEAD(stateList, Buf) stateList[MAX_BUF_STATE_NUM];
+extern CIRCLEQ_HEAD(freeList, Buf) freeListHead;
+extern CIRCLEQ_HEAD(lruList, Buf) lruListHead;
 
 extern void BufInit(void);
 extern void BufRead(int blkno, char* pData);

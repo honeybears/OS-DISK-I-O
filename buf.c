@@ -3,6 +3,7 @@
 #include "buf.h"
 #include "queue.h"
 #include "disk.h"
+#include <string.h>
 
 struct bufList      bufList[MAX_BUFLIST_NUM];
 struct stateList    stateList[MAX_BUF_STATE_NUM];
@@ -47,7 +48,7 @@ void BufRead(int blkno, char* pData)
     int hash = blkno % MAX_BUFLIST_NUM;
     CIRCLEQ_FOREACH(tmp, &bufList[hash],  blist){
         if(tmp-> blkno == blkno){
-            pData = tmp -> pMem;
+            memcpy(pData,tmp->pMem,BLOCK_SIZE);
             CIRCLEQ_REMOVE(&lruListHead,tmp,llist);
             CIRCLEQ_INSERT_TAIL(&lruListHead,tmp,llist);
             return;
@@ -66,7 +67,7 @@ void BufRead(int blkno, char* pData)
     CIRCLEQ_INSERT_TAIL(&stateList[BUF_CLEAN_LIST], newBuf, blist);
     CIRCLEQ_INSERT_TAIL(&lruListHead,tmp,llist);
 
-    pData = newBuf->pMem;
+    memcpy(pData,tmp->pMem,BLOCK_SIZE);
 
 
 }
@@ -79,8 +80,7 @@ void BufWrite(int blkno, char* pData)
 
     CIRCLEQ_FOREACH(tmp, &bufList[hash],  blist){
         if(tmp-> blkno == blkno){
-
-            tmp -> pMem = pData;
+            memcpy(tmp->pMem, pData, BLOCK_SIZE);
 
             if(tmp->state == BUF_STATE_DIRTY){
                 CIRCLEQ_REMOVE(&lruListHead, tmp, llist);
@@ -199,4 +199,3 @@ int GetBufInfoInBufferList(int index, Buf* ppBufInfo[], int numBuf)
     }
     return bufferContainedCounter;
 }
-

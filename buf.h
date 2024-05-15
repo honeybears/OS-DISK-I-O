@@ -6,7 +6,7 @@
 
 
 #define MAX_BUFLIST_NUM     (4)
-#define MAX_BUF_NUM         (8)
+#define MAX_BUF_NUM         (16) 
 #define MAX_BUF_STATE_NUM   (2)
 #define BLKNO_INVALID       (-1)
 
@@ -38,12 +38,13 @@ struct Buf
     CIRCLEQ_ENTRY(Buf) blist;
     CIRCLEQ_ENTRY(Buf) slist;
     CIRCLEQ_ENTRY(Buf) llist;
+    CIRCLEQ_ENTRY(Buf) flist;
 };
 
-CIRCLEQ_HEAD(bufList, Buf) bufList[MAX_BUFLIST_NUM];
-CIRCLEQ_HEAD(stateList, Buf) stateList[MAX_BUF_STATE_NUM];
-CIRCLEQ_HEAD(freeList, Buf) freeListHead;
-CIRCLEQ_HEAD(lruList, Buf) lruListHead;
+extern CIRCLEQ_HEAD(bufList, Buf) bufList[MAX_BUFLIST_NUM];
+extern CIRCLEQ_HEAD(stateList, Buf) stateList[MAX_BUF_STATE_NUM];
+extern CIRCLEQ_HEAD(freeList, Buf) freeListHead;
+extern CIRCLEQ_HEAD(lruList, Buf) lruListHead;
 
 extern void BufInit(void);
 extern void BufRead(int blkno, char* pData);

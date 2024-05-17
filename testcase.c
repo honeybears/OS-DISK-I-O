@@ -115,11 +115,7 @@ int testcase3(){
     BufSync();
 
     PrintBufInfo();
-
-
     PrintDiskInfo(0, 31);
-
-
 
     for( i = 32; i < 32 + MAX_BUF_NUM; i++ ){
 
@@ -139,8 +135,9 @@ int testcase3(){
 
 int main()
 {
-    BufInit();
     DevCreateDisk();
+    BufInit();
+
 
     if ( testcase1() == 1 )
         printf("\n testcase 1 complete. \n\n");
@@ -156,12 +153,11 @@ int main()
         printf("\n testcase 3 complete. \n\n");
     else
         goto out;
-    DevCloseDisk();
+
 out:
-    DevCloseDisk();
+
     return 0;
 }
-
 
 void PrintBufInfo()
 {

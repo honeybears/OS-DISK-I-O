@@ -74,8 +74,7 @@ Buf* getFreeBuf(){
 
         CIRCLEQ_REMOVE(&lruListHead,victim,llist);
      
-     
-        // TODO()        
+           
         if(isinBufList(victim) == TRUE){
         
             detachBListById(victim->blkno);
@@ -286,7 +285,7 @@ void BufSync(void)
     // }
     tmp = CIRCLEQ_FIRST(&stateList[BUF_DIRTY_LIST]);
     int size = GetDirtyListSize();
-    for(int i =0;i < size; i++){
+    for(int i = 0; i < size; i++){
        
         Buf* var = CIRCLEQ_NEXT(tmp,slist);
 
